@@ -1,6 +1,6 @@
 "use client";
 
-import { Play, Film, Award, Clock } from "lucide-react";
+import { Play } from "lucide-react";
 
 interface HomePanelProps {
   onNavigate: (section: string) => void;
@@ -12,10 +12,7 @@ export default function HomePanel({ onNavigate }: HomePanelProps) {
       {/* Top Header */}
       <div className="flex justify-between items-start">
         <div>
-          <p className="font-sans text-[10px] md:text-xs font-bold tracking-widest text-accent uppercase">
-            Creative Portfolio
-          </p>
-          <h2 className="font-editorial text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mt-2 text-foreground">
+          <h2 className="font-editorial text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-foreground">
             ALEXANDRA CLARKE
           </h2>
           <p className="font-sans text-xs md:text-sm text-neutral-grey mt-2 tracking-wide">
@@ -61,43 +58,9 @@ export default function HomePanel({ onNavigate }: HomePanelProps) {
         </div>
       </div>
 
-      {/* Bottom Stats & CTA */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
-        {/* Statistics */}
-        <div className="grid grid-cols-3 gap-4 border-t border-white/10 pt-6">
-          <div className="flex flex-col gap-1">
-            <div className="flex items-center gap-2 text-accent">
-              <Clock className="h-4 w-4" />
-              <span className="font-sans text-xl md:text-2xl font-bold">10+</span>
-            </div>
-            <span className="font-sans text-[9px] md:text-[10px] text-neutral-grey uppercase tracking-widest font-semibold">
-              Years Exp
-            </span>
-          </div>
-
-          <div className="flex flex-col gap-1">
-            <div className="flex items-center gap-2 text-accent">
-              <Film className="h-4 w-4" />
-              <span className="font-sans text-xl md:text-2xl font-bold">50+</span>
-            </div>
-            <span className="font-sans text-[9px] md:text-[10px] text-neutral-grey uppercase tracking-widest font-semibold">
-              Films Directed
-            </span>
-          </div>
-
-          <div className="flex flex-col gap-1">
-            <div className="flex items-center gap-2 text-accent">
-              <Award className="h-4 w-4" />
-              <span className="font-sans text-xl md:text-2xl font-bold">12</span>
-            </div>
-            <span className="font-sans text-[9px] md:text-[10px] text-neutral-grey uppercase tracking-widest font-semibold">
-              Industry Awards
-            </span>
-          </div>
-        </div>
-
-        {/* CTA Actions */}
-        <div className="flex gap-4 justify-start md:justify-end">
+      {/* Bottom CTA */}
+      <div className="flex justify-end border-t border-white/10 pt-6">
+        <div className="flex gap-4">
           <button
             data-cursor="pointer"
             onClick={() => onNavigate("portfolio")}

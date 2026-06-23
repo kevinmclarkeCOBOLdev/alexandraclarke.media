@@ -148,19 +148,23 @@ export default function Page() {
       {/* Floating Header */}
       <header className="absolute top-0 left-0 right-0 z-30 flex items-center justify-between p-6 pointer-events-none">
         <div className="flex items-center gap-4 pointer-events-auto">
-          <button
-            onClick={() => handlePanelChange("home")}
-            data-cursor="pointer"
-            className="font-editorial text-sm font-bold tracking-widest text-foreground hover:text-accent transition-colors"
-          >
-            A.C
-          </button>
-          <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-neutral-dark/80 border border-white/5 backdrop-blur-md">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
-            <span className="font-sans text-[8px] font-bold tracking-widest text-accent uppercase">
-              STUDIO ONLINE
-            </span>
-          </div>
+          {activePanel !== "home" && (
+            <>
+              <button
+                onClick={() => handlePanelChange("home")}
+                data-cursor="pointer"
+                className="font-editorial text-sm font-bold tracking-widest text-foreground hover:text-accent transition-colors"
+              >
+                A.C
+              </button>
+              <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-neutral-dark/80 border border-white/5 backdrop-blur-md">
+                <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+                <span className="font-sans text-[8px] font-bold tracking-widest text-accent uppercase">
+                  STUDIO ONLINE
+                </span>
+              </div>
+            </>
+          )}
         </div>
 
         {/* Global Navigation Links */}
