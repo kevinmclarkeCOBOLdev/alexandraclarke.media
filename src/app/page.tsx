@@ -9,7 +9,7 @@ import TestimonialsPanel from "@/components/panels/TestimonialsPanel";
 import ContactPanel from "@/components/panels/ContactPanel";
 
 const PANELS = [
-  { id: "home", title: "Home", index: "01", bgImage: "/portfolio-commercial.png" },
+  { id: "home", title: "Home", index: "01", bgImage: "" },
   { id: "about", title: "About", index: "02", bgImage: "/alexandra-portrait.png" },
   { id: "portfolio", title: "Portfolio", index: "03", bgImage: "/portfolio-fashion.png" },
   { id: "testimonials", title: "Testimonials", index: "04", bgImage: "/portfolio-commercial.png" },
@@ -180,7 +180,7 @@ export default function Page() {
             onClick={() => handlePanelChange(panel.id)}
           >
             {panel.id === "home" && (
-              <HomePanel onNavigate={handlePanelChange} />
+              <HomePanel />
             )}
             {panel.id === "about" && <AboutPanel />}
             {panel.id === "portfolio" && <PortfolioPanel />}

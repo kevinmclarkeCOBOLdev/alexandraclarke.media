@@ -135,13 +135,15 @@ export default function Panel({
           isActive ? "opacity-0" : "opacity-15 group-hover:opacity-25"
         }`}
       >
-        <Image
-          src={bgImage}
-          alt=""
-          fill
-          className="object-cover filter grayscale contrast-125"
-          sizes="20vw"
-        />
+        {bgImage && (
+          <Image
+            src={bgImage}
+            alt=""
+            fill
+            className="object-cover filter grayscale contrast-125"
+            sizes="20vw"
+          />
+        )}
       </div>
 
       {/* Click Trigger Area for Inactive State */}
