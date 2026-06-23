@@ -1,21 +1,102 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Image from "next/image";
+
+interface YTPlayer {
+  destroy: () => void;
+}
 
 export default function HomePanel() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isVideoEnded, setIsVideoEnded] = useState(false);
+
+  useEffect(() => {
+    let player: YTPlayer | null = null;
+    let isDestroyed = false;
+
+    const initializePlayer = () => {
+      if (isDestroyed) return;
+      try {
+        // @ts-expect-error window.YT is not typed
+        player = new window.YT.Player("bg-video-iframe", {
+          events: {
+            onStateChange: (event: { data: number }) => {
+              // @ts-expect-error window.YT is not typed
+              if (event.data === window.YT.PlayerState.ENDED) {
+                setIsVideoEnded(true);
+              }
+            },
+          },
+        });
+      } catch (err) {
+        console.error("Error initializing YouTube Player API:", err);
+      }
+    };
+
+    // Check if script is already present
+    const existingScript = document.getElementById("youtube-iframe-api-script");
+
+    // @ts-expect-error window.YT is not typed
+    if (window.YT && window.YT.Player) {
+      initializePlayer();
+    } else {
+      if (!existingScript) {
+        const tag = document.createElement("script");
+        tag.id = "youtube-iframe-api-script";
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName("script")[0];
+        if (firstScriptTag && firstScriptTag.parentNode) {
+          firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        }
+      }
+
+      // Hook into the global ready callback
+      // @ts-expect-error window.onYouTubeIframeAPIReady is not typed
+      const previousCallback = window.onYouTubeIframeAPIReady;
+      // @ts-expect-error window.onYouTubeIframeAPIReady is not typed
+      window.onYouTubeIframeAPIReady = () => {
+        if (previousCallback) previousCallback();
+        initializePlayer();
+      };
+    }
+
+    return () => {
+      isDestroyed = true;
+      if (player && typeof player.destroy === "function") {
+        try {
+          player.destroy();
+        } catch {
+          // ignore destroy errors
+        }
+      }
+    };
+  }, []);
 
   return (
     <div className="relative flex h-full w-full flex-col justify-between p-6 md:p-12 lg:p-16 overflow-hidden">
       {/* Background Video Player */}
       <div className="absolute inset-0 overflow-hidden z-0 bg-black pointer-events-auto">
         <iframe
-          className="absolute top-1/2 left-1/2 w-[177.78vh] min-w-full h-[56.25vw] min-h-full -translate-x-1/2 -translate-y-1/2 pointer-events-auto"
-          src="https://www.youtube.com/embed/jEye9YVJ7q4?autoplay=1&mute=1&controls=1&rel=0&playsinline=1"
+          id="bg-video-iframe"
+          className={`absolute top-1/2 left-1/2 w-[177.78vh] min-w-full h-[56.25vw] min-h-full -translate-x-1/2 -translate-y-1/2 pointer-events-auto transition-opacity duration-1000 ${
+            isVideoEnded ? "opacity-0" : "opacity-100"
+          }`}
+          src="https://www.youtube.com/embed/jEye9YVJ7q4?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&enablejsapi=1"
           frameBorder="0"
           allow="autoplay; encrypted-media"
           title="Background Showreel"
         ></iframe>
+
+        {isVideoEnded && (
+          <Image
+            src="/alexandra-clarke-static-home-image.webp"
+            alt="Alexandra Clarke Showreel Static Home"
+            fill
+            priority
+            className="object-cover transition-opacity duration-1000 opacity-100"
+          />
+        )}
         {/* Dark overlay to ensure text readability */}
         <div className="absolute inset-0 bg-black/20 pointer-events-none" />
       </div>
