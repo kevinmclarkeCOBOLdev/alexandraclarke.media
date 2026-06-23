@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import localFont from "next/font/local";
-import CustomCursor from "@/components/CustomCursor";
 import "./globals.css";
 
 const agency = localFont({
@@ -55,7 +54,6 @@ export default function RootLayout({
       <body
         className={`${agency.variable} ${poppins.variable} font-sans antialiased h-full w-full overflow-hidden`}
       >
-        <CustomCursor />
         {children}
       </body>
     </html>
