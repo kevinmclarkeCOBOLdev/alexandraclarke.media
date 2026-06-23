@@ -1,103 +1,207 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState, useEffect, useCallback, useRef } from "react";
+import Panel from "@/components/Panel";
+import HomePanel from "@/components/panels/HomePanel";
+import AboutPanel from "@/components/panels/AboutPanel";
+import PortfolioPanel from "@/components/panels/PortfolioPanel";
+import TestimonialsPanel from "@/components/panels/TestimonialsPanel";
+import ContactPanel from "@/components/panels/ContactPanel";
+
+const PANELS = [
+  { id: "home", title: "Home", index: "01", bgImage: "/portfolio-commercial.png" },
+  { id: "about", title: "About", index: "02", bgImage: "/alexandra-portrait.png" },
+  { id: "portfolio", title: "Portfolio", index: "03", bgImage: "/portfolio-fashion.png" },
+  { id: "testimonials", title: "Testimonials", index: "04", bgImage: "/portfolio-commercial.png" },
+  { id: "contact", title: "Contact", index: "05", bgImage: "/portfolio-fashion.png" },
+];
+
+export default function Page() {
+  const [activePanel, setActivePanel] = useState("home");
+  const lastScrollTime = useRef(0);
+  const touchStart = useRef({ x: 0, y: 0 });
+
+  // Update hash state
+  const handlePanelChange = useCallback((id: string) => {
+    setActivePanel(id);
+    if (typeof window !== "undefined") {
+      window.history.pushState(null, "", `#${id}`);
+    }
+  }, []);
+
+  // Sync state with URL hash
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace("#", "");
+      if (PANELS.some((p) => p.id === hash)) {
+        setActivePanel(hash);
+      }
+    };
+
+    if (typeof window !== "undefined") {
+      if (window.location.hash) {
+        handleHashChange();
+      }
+      window.addEventListener("hashchange", handleHashChange);
+    }
+
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("hashchange", handleHashChange);
+      }
+    };
+  }, []);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const currentIndex = PANELS.findIndex((p) => p.id === activePanel);
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        if (currentIndex < PANELS.length - 1) {
+          handlePanelChange(PANELS[currentIndex + 1].id);
+        }
+      } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        if (currentIndex > 0) {
+          handlePanelChange(PANELS[currentIndex - 1].id);
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activePanel, handlePanelChange]);
+
+  // Mouse wheel scroll navigation (debounced to prevent rapid skipping)
+  const handleWheel = useCallback(
+    (e: React.WheelEvent) => {
+      const now = Date.now();
+      if (now - lastScrollTime.current < 1000) return; // 1 second cooldown
+
+      // Ensure we are not scrolling inside scrollable container elements
+      const target = e.target as HTMLElement;
+      const scrollable = target.closest(".overflow-y-auto");
+      if (scrollable) {
+        // If the inner container is scrollable and we haven't reached the bounds, don't trigger panel change
+        const scrollTop = scrollable.scrollTop;
+        const scrollHeight = scrollable.scrollHeight;
+        const clientHeight = scrollable.clientHeight;
+        
+        if (e.deltaY > 0 && scrollTop + clientHeight < scrollHeight - 10) return;
+        if (e.deltaY < 0 && scrollTop > 10) return;
+      }
+
+      const currentIndex = PANELS.findIndex((p) => p.id === activePanel);
+
+      if (e.deltaY > 50) {
+        if (currentIndex < PANELS.length - 1) {
+          lastScrollTime.current = now;
+          handlePanelChange(PANELS[currentIndex + 1].id);
+        }
+      } else if (e.deltaY < -50) {
+        if (currentIndex > 0) {
+          lastScrollTime.current = now;
+          handlePanelChange(PANELS[currentIndex - 1].id);
+        }
+      }
+    },
+    [activePanel, handlePanelChange]
+  );
+
+  // Swipe gestural navigation
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStart.current = {
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY,
+    };
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const deltaX = touchStart.current.x - e.changedTouches[0].clientX;
+    const deltaY = touchStart.current.y - e.changedTouches[0].clientY;
+    const currentIndex = PANELS.findIndex((p) => p.id === activePanel);
+
+    // Detect horizontal swipes for desktop or vertical accordion card swipes
+    const isHorizontalSwipe = Math.abs(deltaX) > Math.abs(deltaY);
+
+    if (isHorizontalSwipe) {
+      if (deltaX > 80 && currentIndex < PANELS.length - 1) {
+        handlePanelChange(PANELS[currentIndex + 1].id);
+      } else if (deltaX < -80 && currentIndex > 0) {
+        handlePanelChange(PANELS[currentIndex - 1].id);
+      }
+    } else {
+      if (deltaY > 80 && currentIndex < PANELS.length - 1) {
+        handlePanelChange(PANELS[currentIndex + 1].id);
+      } else if (deltaY < -80 && currentIndex > 0) {
+        handlePanelChange(PANELS[currentIndex - 1].id);
+      }
+    }
+  };
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div
+      onWheel={handleWheel}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      className="flex flex-col h-screen w-screen overflow-hidden bg-background text-foreground"
+    >
+      {/* Floating Header */}
+      <header className="absolute top-0 left-0 right-0 z-30 flex items-center justify-between p-6 pointer-events-none">
+        <div className="flex items-center gap-4 pointer-events-auto">
+          <button
+            onClick={() => handlePanelChange("home")}
+            data-cursor="pointer"
+            className="font-editorial text-sm font-bold tracking-widest text-foreground hover:text-accent transition-colors"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            A.C
+          </button>
+          <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-neutral-dark/80 border border-white/5 backdrop-blur-md">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+            <span className="font-sans text-[8px] font-bold tracking-widest text-accent uppercase">
+              STUDIO ONLINE
+            </span>
+          </div>
         </div>
+
+        {/* Global Navigation Links */}
+        <nav className="flex items-center gap-6 pointer-events-auto bg-neutral-dark/60 border border-white/5 px-4 py-2 rounded-full backdrop-blur-md">
+          {PANELS.map((panel) => (
+            <button
+              key={panel.id}
+              onClick={() => handlePanelChange(panel.id)}
+              data-cursor="pointer"
+              className={`font-sans text-[10px] font-bold uppercase tracking-widest transition-colors duration-300 ${
+                activePanel === panel.id ? "text-accent" : "text-foreground/60 hover:text-foreground"
+              }`}
+            >
+              {panel.title}
+            </button>
+          ))}
+        </nav>
+      </header>
+
+      {/* Panels Container */}
+      <main className="flex flex-col lg:flex-row h-full w-full pt-20 lg:pt-0">
+        {PANELS.map((panel) => (
+          <Panel
+            key={panel.id}
+            id={panel.id}
+            title={panel.title}
+            index={panel.index}
+            isActive={activePanel === panel.id}
+            bgImage={panel.bgImage}
+            onClick={() => handlePanelChange(panel.id)}
+          >
+            {panel.id === "home" && (
+              <HomePanel onNavigate={handlePanelChange} />
+            )}
+            {panel.id === "about" && <AboutPanel />}
+            {panel.id === "portfolio" && <PortfolioPanel />}
+            {panel.id === "testimonials" && <TestimonialsPanel />}
+            {panel.id === "contact" && <ContactPanel />}
+          </Panel>
+        ))}
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
