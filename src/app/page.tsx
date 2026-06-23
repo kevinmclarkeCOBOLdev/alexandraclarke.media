@@ -175,7 +175,6 @@ export default function Page() {
             key={panel.id}
             id={panel.id}
             title={panel.title}
-            index={panel.index}
             isActive={activePanel === panel.id}
             bgImage={panel.bgImage}
             onClick={() => handlePanelChange(panel.id)}
