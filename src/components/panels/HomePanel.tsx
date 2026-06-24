@@ -173,10 +173,13 @@ export default function HomePanel() {
 
       {/* Play Showreel Button (Centered, level with TikTok icon) */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 md:bottom-12 lg:bottom-16 z-10">
+        {/* Pulsing ring background */}
+        <div className="absolute inset-0 rounded-[50px] bg-[#FBAB3C] button-glow-pulse pointer-events-none" />
+        
         <button
           onClick={() => setIsModalOpen(true)}
           data-cursor="pointer"
-          className="flex h-[53px] w-[209px] items-center justify-center bg-[#FBAB3C] hover:bg-[#E59A2B] text-black rounded-[50px] font-sans text-xs md:text-sm font-semibold uppercase tracking-[2px] transition-all duration-300 hover:scale-105 shadow-lg border border-white/5 cursor-pointer"
+          className="relative flex h-[53px] w-[209px] items-center justify-center bg-[#FBAB3C] hover:bg-[#E59A2B] text-black rounded-[50px] font-sans text-xs md:text-sm font-semibold uppercase tracking-[2px] transition-all duration-300 hover:scale-105 shadow-lg border border-white/5 cursor-pointer"
         >
           PLAY SHOWREEL
           <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 ml-2.5">
