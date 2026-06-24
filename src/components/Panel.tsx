@@ -159,12 +159,11 @@ export default function Panel({
       {/* Collapsed Preview Title (Desktop: Vertical text, Mobile: Horizontal header) */}
       <div
         ref={titleRef}
-        className="absolute inset-0 flex flex-row lg:flex-col items-center justify-center lg:justify-end p-4 lg:py-8 lg:px-0 pointer-events-none select-none z-10 transition-opacity"
+        className="absolute inset-0 flex flex-row lg:flex-col items-center justify-center p-4 lg:py-8 lg:px-0 pointer-events-none select-none z-10 transition-opacity"
       >
-        <h2 className="font-editorial text-xl lg:text-2xl font-bold tracking-widest uppercase stroked-title lg:rotate-90 transform whitespace-nowrap lg:my-auto">
+        <h2 className="font-editorial text-4xl lg:text-5xl font-bold tracking-widest uppercase stroked-title lg:rotate-90 transform whitespace-nowrap">
           {title}
         </h2>
-        <div className="h-1.5 w-1.5 rounded-full bg-accent/40 lg:my-4 hidden lg:block" />
       </div>
 
       {/* Expanded Panel Content */}
