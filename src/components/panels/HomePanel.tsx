@@ -97,8 +97,20 @@ export default function HomePanel() {
             className="object-cover transition-opacity duration-1000 opacity-100"
           />
         )}
+        {/* Textured overlay */}
+        <div 
+          className={`absolute inset-0 pointer-events-none z-[1] transition-opacity duration-1000 ${
+            isVideoEnded ? "opacity-0" : "opacity-20"
+          }`}
+          style={{ 
+            backgroundImage: "url('/textured-overlay.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat"
+          }}
+        />
         {/* Dark overlay to ensure text readability */}
-        <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+        <div className="absolute inset-0 bg-black/20 pointer-events-none z-[2]" />
       </div>
 
       {/* Top Header */}
