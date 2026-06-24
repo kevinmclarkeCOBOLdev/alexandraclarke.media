@@ -82,7 +82,7 @@ export default function HomePanel() {
           className={`absolute top-1/2 left-1/2 w-[177.78vh] min-w-full h-[56.25vw] min-h-full -translate-x-1/2 -translate-y-1/2 pointer-events-auto transition-opacity duration-1000 ${
             isVideoEnded ? "opacity-0" : "opacity-100"
           }`}
-          src="https://www.youtube.com/embed/jEye9YVJ7q4?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&enablejsapi=1"
+          src="https://www.youtube.com/embed/BoUrWXaQUQQ?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&enablejsapi=1"
           frameBorder="0"
           allow="autoplay; encrypted-media"
           title="Background Showreel"
@@ -104,10 +104,10 @@ export default function HomePanel() {
       {/* Top Header */}
       <div className="relative z-10 flex justify-between items-start mt-[50px]">
         <div>
-          <h2 className="font-editorial text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-[#FBAB3C]">
+          <h2 className="font-editorial text-7xl md:text-9xl lg:text-[10rem] font-bold tracking-tight stroked-title">
             ALEXANDRA CLARKE
           </h2>
-          <p className="font-sans text-lg md:text-xl font-medium text-[#FBAB3C] mt-2 tracking-wide">
+          <p className="font-sans text-[27px] md:text-3xl font-medium text-[#FBAB3C] mt-2 tracking-wide">
             filmmaker, 3d-modeller, animator, & social media manager
           </p>
         </div>
@@ -192,7 +192,7 @@ export default function HomePanel() {
             {/* Video Iframe (Unmuted showreel playback) */}
             <iframe
               className="w-full h-full"
-              src="https://www.youtube.com/embed/jEye9YVJ7q4?autoplay=1&controls=1&rel=0&playsinline=1"
+              src="https://www.youtube.com/embed/BoUrWXaQUQQ?autoplay=1&controls=1&rel=0&playsinline=1"
               frameBorder="0"
               allow="autoplay; encrypted-media"
               allowFullScreen
