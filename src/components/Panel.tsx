@@ -143,8 +143,8 @@ export default function Panel({
           sizes="20vw"
           priority
         />
-        {/* Black overlay with opacity 0.5 */}
-        <div className="absolute inset-0 bg-black/50" />
+        {/* Black overlay with opacity 0.75 */}
+        <div className="absolute inset-0 bg-black/75" />
       </div>
 
       {/* Click Trigger Area for Inactive State */}
