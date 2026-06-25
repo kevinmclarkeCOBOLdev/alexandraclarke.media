@@ -74,6 +74,9 @@ export default function Page() {
   // Mouse wheel scroll navigation (debounced to prevent rapid skipping)
   const handleWheel = useCallback(
     (e: React.WheelEvent) => {
+      // Prevent scroll-based transitions on desktop
+      if (typeof window !== "undefined" && window.innerWidth >= 1024) return;
+
       const now = Date.now();
       if (now - lastScrollTime.current < 1000) return; // 1 second cooldown
 

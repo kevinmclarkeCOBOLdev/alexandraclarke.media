@@ -10,8 +10,41 @@ interface YTPlayer {
 export default function HomePanel() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isVideoEnded, setIsVideoEnded] = useState(false);
+  const [isPageLoaded, setIsPageLoaded] = useState(false);
+  const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [shouldShrinkTags, setShouldShrinkTags] = useState(false);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (document.readyState === "complete") {
+        setIsPageLoaded(true);
+      } else {
+        const handleLoad = () => setIsPageLoaded(true);
+        window.addEventListener("load", handleLoad);
+        return () => window.removeEventListener("load", handleLoad);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isPageLoaded) {
+      const timer = setTimeout(() => {
+        setShouldPlayVideo(true);
+      }, 2700);
+      return () => clearTimeout(timer);
+    }
+  }, [isPageLoaded]);
+
+  useEffect(() => {
+    if (isVideoPlaying) {
+      setShouldShrinkTags(true);
+    }
+  }, [isVideoPlaying]);
+
+  useEffect(() => {
+    if (!shouldPlayVideo) return;
+
     let player: YTPlayer | null = null;
     let isDestroyed = false;
 
@@ -25,6 +58,10 @@ export default function HomePanel() {
               // @ts-expect-error window.YT is not typed
               if (event.data === window.YT.PlayerState.ENDED) {
                 setIsVideoEnded(true);
+              }
+              // @ts-expect-error window.YT is not typed
+              if (event.data === window.YT.PlayerState.PLAYING) {
+                setIsVideoPlaying(true);
               }
             },
           },
@@ -71,32 +108,35 @@ export default function HomePanel() {
         }
       }
     };
-  }, []);
+  }, [shouldPlayVideo]);
 
   return (
     <div className="relative flex h-full w-full flex-col justify-between p-6 md:p-12 lg:p-16 overflow-hidden">
       {/* Background Video Player */}
       <div className="absolute inset-0 overflow-hidden z-0 bg-black pointer-events-auto">
-        <iframe
-          id="bg-video-iframe"
-          className={`absolute top-1/2 left-1/2 w-[177.78vh] min-w-full h-[56.25vw] min-h-full -translate-x-1/2 -translate-y-1/2 pointer-events-auto transition-opacity duration-1000 ${
-            isVideoEnded ? "opacity-0" : "opacity-100"
-          }`}
-          src="https://www.youtube.com/embed/BoUrWXaQUQQ?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&enablejsapi=1"
-          frameBorder="0"
-          allow="autoplay; encrypted-media"
-          title="Background Showreel"
-        ></iframe>
-
-        {isVideoEnded && (
-          <Image
-            src="/alexandra-clarke-static-home-image.webp"
-            alt="Alexandra Clarke Showreel Static Home"
-            fill
-            priority
-            className="object-cover transition-opacity duration-1000 opacity-100"
-          />
+        {shouldPlayVideo && (
+          <iframe
+            id="bg-video-iframe"
+            className={`absolute top-1/2 left-1/2 w-[177.78vh] min-w-full h-[56.25vw] min-h-full -translate-x-1/2 -translate-y-1/2 pointer-events-auto transition-opacity duration-1000 ${
+              isVideoEnded ? "opacity-0" : "opacity-100"
+            }`}
+            src="https://www.youtube.com/embed/BoUrWXaQUQQ?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&enablejsapi=1"
+            frameBorder="0"
+            allow="autoplay; encrypted-media"
+            title="Background Showreel"
+          ></iframe>
         )}
+
+        <Image
+          src="/alexandra-clarke-static-home-image.webp"
+          alt="Alexandra Clarke Showreel Static Home"
+          fill
+          priority
+          className={`object-cover transition-opacity duration-1000 ${
+            isVideoPlaying && !isVideoEnded ? "opacity-0 pointer-events-none" : "opacity-100"
+          }`}
+          sizes="100vw"
+        />
         {/* Textured overlay */}
         <div 
           className={`absolute inset-0 pointer-events-none z-[1] transition-opacity duration-1000 ${
@@ -129,9 +169,26 @@ export default function HomePanel() {
               B.A.
             </span>
           </h2>
-          <p className="font-sans text-[27px] md:text-3xl font-medium text-[#FBAB3C] mt-2 tracking-wide">
-            filmmaker, 3d-modeller, animator, &amp; social media manager
-          </p>
+          <div
+            className={`flex flex-col font-sans font-medium text-[#FBAB3C] tracking-wide items-start leading-[1.1] transition-all duration-[2000ms] ease-in-out ${
+              shouldShrinkTags
+                ? "text-[27px] md:text-[30px] gap-1 mt-3"
+                : "text-[54px] md:text-[60px] gap-2 mt-6"
+            }`}
+          >
+            <span className={`block opacity-0 ${isPageLoaded ? "animate-slide-in-left" : ""}`} style={{ animationDelay: "270ms" }}>
+              filmmaker,
+            </span>
+            <span className={`block opacity-0 ${isPageLoaded ? "animate-slide-in-left" : ""}`} style={{ animationDelay: "530ms" }}>
+              3d-modeller,
+            </span>
+            <span className={`block opacity-0 ${isPageLoaded ? "animate-slide-in-left" : ""}`} style={{ animationDelay: "800ms" }}>
+              animator,
+            </span>
+            <span className={`block opacity-0 ${isPageLoaded ? "animate-slide-in-left" : ""}`} style={{ animationDelay: "1070ms" }}>
+              &amp; social media manager
+            </span>
+          </div>
         </div>
       </div>
 

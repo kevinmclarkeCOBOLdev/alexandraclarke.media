@@ -101,3 +101,19 @@ html, body {
   animation: button-glow-pulse 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
+@keyframes slide-fade-in-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-200px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-left {
+  animation: slide-fade-in-left 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
