@@ -1,28 +1,44 @@
 "use client";
 
 import Image from "next/image";
-import { Camera, Layers, Aperture, Cpu } from "lucide-react";
 
 export default function AboutPanel() {
-  const milestones = [
-    { year: "2023 - Pres", title: "Creative Director", company: "Independent / Clarke & Co" },
-    { year: "2020 - 2023", title: "Senior Director / Filmmaker", company: "Vanguard Studios London" },
-    { year: "2017 - 2020", title: "Visual Storyteller & Photographer", company: "Rebel Media Group" },
-    { year: "2015 - 2017", title: "Assistant Producer", company: "Cinematic Horizons" },
+  const education = [
+    {
+      institution: "TEESSIDE UNIVERSITY in Prague",
+      period: "September 2023 – June 2026",
+      degree: "BA (Hons) Creative Media Production",
+    },
+    {
+      institution: "TEESSIDE UNIVERSITY in Prague",
+      period: "September 2022 – June 2023",
+      degree: "Foundation Diploma in Art, Design & Media",
+    },
+    {
+      institution: "EDUCANET GYMNASIUM, Prague",
+      period: "September 2016 – June 2022",
+      degree: "High School",
+    },
   ];
 
-  const gear = [
-    { icon: Camera, name: "ARRI Alexa Mini LF", desc: "Large-format cinema camera" },
-    { icon: Aperture, name: "Leica Summicron-C", desc: "Prime cine lens set" },
-    { icon: Layers, name: "DJI Ronin 2", desc: "Professional stabilization system" },
-    { icon: Cpu, name: "DaVinci Resolve Studio", desc: "Color grading & editing suite" },
+  const experience = [
+    {
+      company: "The Mad & Merry Men Theatre Company, Prague",
+      period: "2024 – 2026",
+      role: "Social Media Manager & Photographer",
+    },
+    {
+      company: "Sad Man’s Tongue Restaurant, Prague",
+      period: "2023 – 2024",
+      role: "Host & Waitress",
+    },
   ];
 
   return (
     <div className="flex h-full w-full flex-col lg:flex-row overflow-y-auto no-scrollbar p-6 md:p-12 lg:p-16 gap-8 lg:gap-12">
       {/* Left Column: Portrait & Creative Philosophy */}
-      <div className="w-full lg:w-[calc(41.67%-150px)] lg:min-w-[250px] flex flex-col justify-between gap-6">
-        <div className="relative aspect-square w-full max-w-[400px] overflow-hidden rounded-lg border border-accent/20 bg-neutral-dark shadow-2xl">
+      <div className="w-full lg:w-[calc(41.67%-150px)] lg:min-w-[250px] flex flex-col gap-6">
+        <div className="relative aspect-square w-full max-w-[400px] overflow-hidden rounded-lg border border-[#FBAB3C]/20 bg-neutral-dark shadow-2xl">
           <Image
             src="/alexandra-clarke-about-me.webp"
             alt="Alexandra Clarke"
@@ -32,82 +48,107 @@ export default function AboutPanel() {
             priority
           />
         </div>
-        <div>
-          <span className="font-sans text-[10px] font-bold tracking-widest text-accent uppercase">
-            Philosophy
-          </span>
-          <p className="font-editorial text-xl md:text-2xl italic text-foreground/90 mt-2 leading-relaxed">
-            &ldquo;Cinematic storytelling is the art of translating raw human emotion into light, shadow, and silence.&rdquo;
-          </p>
-        </div>
       </div>
 
-      {/* Right Column: Bio, Timeline & Gear (Scrollable Content) */}
+      {/* Right Column: Bio, Timeline & Info (Scrollable Content) */}
       <div className="flex-1 flex flex-col gap-10">
         {/* Biography */}
         <div>
-          <span className="font-sans text-[10px] font-bold tracking-widest text-accent uppercase">
+          <h3 className="font-sans text-[20px] font-bold tracking-widest text-[#FBAB3C] uppercase">
             Biography
-          </span>
-          <p className="font-sans text-xs md:text-sm text-neutral-grey mt-4 leading-relaxed tracking-wide">
+          </h3>
+          <p className="font-sans text-[14px] text-neutral-grey mt-4 leading-relaxed tracking-wide">
             A dynamic filmmaker with over 7 years of filmmaking experience, adept at creating a wide range of video content (from 3D animation to interviews &amp; social media content). Possessing strong problem-solving skills and a naturally outgoing personality, I communicate effectively with a diverse clientele for projects.
           </p>
-          <p className="font-sans text-xs md:text-sm text-neutral-grey mt-3 leading-relaxed tracking-wide">
+          <p>&nbsp;</p>
+          <p className="font-sans text-[14px] text-neutral-grey mt-3 leading-relaxed tracking-wide">
             I am committed to maintaining high standards of quality and efficiency in all of my projects.
           </p>
         </div>
 
-        {/* Experience Timeline */}
+        {/* Education */}
         <div>
-          <span className="font-sans text-[10px] font-bold tracking-widest text-accent uppercase">
-            Selected Milestones
-          </span>
-          <div className="mt-4 flex flex-col gap-4 border-l border-accent/20 pl-4">
-            {milestones.map((m, idx) => (
-              <div key={idx} className="relative flex flex-col md:flex-row md:items-center justify-between gap-1">
-                <span className="font-sans text-xs font-bold text-accent">
-                  {m.year}
-                </span>
-                <div className="flex-1 md:ml-6">
-                  <h4 className="font-sans text-xs font-bold text-foreground tracking-wide">
-                    {m.title}
-                  </h4>
-                  <p className="font-sans text-[10px] text-neutral-grey">
-                    {m.company}
-                  </p>
+          <h3 className="font-sans text-[20px] font-bold tracking-widest text-[#FBAB3C] uppercase">
+            Education
+          </h3>
+          <div className="mt-4 flex flex-col gap-4 border-l border-[#FBAB3C]/20 pl-4">
+            {education.map((e, idx) => (
+              <div key={idx} className="relative flex flex-col gap-1">
+                <h4 className="font-sans text-[14px] font-bold text-[#FBAB3C] tracking-wide">
+                  {e.institution}
+                </h4>
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-1 text-[14px] text-neutral-grey">
+                  <span>{e.degree}</span>
+                  <span className="font-sans font-bold text-[#FBAB3C] md:ml-4 whitespace-nowrap">
+                    {e.period}
+                  </span>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Equipment & Process */}
+        {/* Work Experience */}
         <div>
-          <span className="font-sans text-[10px] font-bold tracking-widest text-accent uppercase">
-            The Toolkit
-          </span>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            {gear.map((g, idx) => {
-              const Icon = g.icon;
-              return (
-                <div
-                  key={idx}
-                  className="flex items-center gap-3 p-3 rounded bg-neutral-dark border border-white/5"
-                >
-                  <div className="flex h-10 w-10 items-center justify-center rounded bg-accent/10 text-accent">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-sans text-xs font-bold text-foreground">
-                      {g.name}
-                    </h4>
-                    <p className="font-sans text-[10px] text-neutral-grey">
-                      {g.desc}
-                    </p>
-                  </div>
+          <h3 className="font-sans text-[20px] font-bold tracking-widest text-[#FBAB3C] uppercase">
+            Work Experience
+          </h3>
+          <div className="mt-4 flex flex-col gap-4 border-l border-[#FBAB3C]/20 pl-4">
+            {experience.map((exp, idx) => (
+              <div key={idx} className="relative flex flex-col gap-1">
+                <h4 className="font-sans text-[14px] font-bold text-[#FBAB3C] tracking-wide">
+                  {exp.company}
+                </h4>
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-1 text-[14px] text-neutral-grey">
+                  <span>{exp.role}</span>
+                  <span className="font-sans font-bold text-[#FBAB3C] md:ml-4 whitespace-nowrap">
+                    {exp.period}
+                  </span>
                 </div>
-              );
-            })}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Skills */}
+        <div>
+          <h3 className="font-sans text-[20px] font-bold tracking-widest text-[#FBAB3C] uppercase">
+            Skills &amp; Software
+          </h3>
+          <div className="mt-4 flex flex-col gap-3 border-l border-[#FBAB3C]/20 pl-4">
+            <div>
+              <h4 className="font-sans text-[14px] font-bold text-[#FBAB3C] tracking-wide uppercase">
+                Filmmaking &amp; Creative
+              </h4>
+              <p className="font-sans text-[14px] text-neutral-grey mt-1 leading-relaxed">
+                Filmmaking (directing, editing, script writing, acting) &bull; 3D Modelling + 3D Animation &bull; Problem solving &bull; Teamwork &bull; Time management &bull; Effective communication
+              </p>
+            </div>
+            <div className="mt-2">
+              <h4 className="font-sans text-[14px] font-bold text-[#FBAB3C] tracking-wide uppercase">
+                Software &amp; Tools
+              </h4>
+              <p className="font-sans text-[14px] text-neutral-grey mt-1 leading-relaxed">
+                DaVinci Resolve (film editing) &bull; Blender (3D modelling) &bull; Photoshop (photo editing)
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Languages */}
+        <div>
+          <h3 className="font-sans text-[20px] font-bold tracking-widest text-[#FBAB3C] uppercase">
+            Languages
+          </h3>
+          <div className="mt-4 flex flex-col gap-2 border-l border-[#FBAB3C]/20 pl-4">
+            <div className="flex items-center justify-between text-[14px]">
+              <span className="font-sans font-bold text-foreground tracking-wide">ENGLISH</span>
+              <span className="font-sans font-bold text-[#FBAB3C]">NATIVE SPEAKER</span>
+            </div>
+            <div className="flex items-center justify-between text-[14px]">
+              <span className="font-sans font-bold text-foreground tracking-wide">CZECH</span>
+              <span className="font-sans font-bold text-[#FBAB3C]">FLUENT</span>
+            </div>
           </div>
         </div>
       </div>
