@@ -20,24 +20,6 @@ export default function Page() {
   const [activePanel, setActivePanel] = useState("home");
   const lastScrollTime = useRef(0);
   const touchStart = useRef({ x: 0, y: 0 });
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const savedTheme = (localStorage.getItem("theme") as "dark" | "light") || "dark";
-      setTheme(savedTheme);
-      document.documentElement.setAttribute("data-theme", savedTheme);
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
-    setTheme(newTheme);
-    if (typeof window !== "undefined") {
-      localStorage.setItem("theme", newTheme);
-      document.documentElement.setAttribute("data-theme", newTheme);
-    }
-  };
 
   // Update hash state
   const handlePanelChange = useCallback((id: string) => {
@@ -174,7 +156,7 @@ export default function Page() {
             onClick={() => handlePanelChange(panel.id)}
           >
             {panel.id === "home" && (
-              <HomePanel theme={theme} toggleTheme={toggleTheme} />
+              <HomePanel />
             )}
             {panel.id === "about" && <AboutPanel />}
             {panel.id === "portfolio" && <PortfolioPanel />}
