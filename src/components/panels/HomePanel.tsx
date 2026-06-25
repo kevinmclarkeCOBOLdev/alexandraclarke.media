@@ -168,13 +168,6 @@ export default function HomePanel() {
         />
         {/* Dark overlay to ensure text readability */}
         <div className="absolute inset-0 bg-black/20 pointer-events-none z-[2]" />
-
-        {/* Black fade-in cover */}
-        <div
-          className={`absolute inset-0 bg-black pointer-events-none transition-opacity duration-[5000ms] ease-out z-[3] ${
-            isPageLoaded ? "opacity-0" : "opacity-100"
-          }`}
-        />
       </div>
 
       {/* Top Header */}

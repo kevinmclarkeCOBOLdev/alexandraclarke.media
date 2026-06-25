@@ -98,7 +98,7 @@ export default function AboutPanel() {
       </div>
 
       {/* Right Column: Bio, Timeline & Info (Scrollable Content) */}
-      <div className="relative z-10 flex-1 flex flex-col gap-10 lg:pl-[75px]">
+      <div className="relative z-10 flex-1 flex flex-col gap-10 pl-[75px]">
         {/* Biography */}
         <div>
           <h3 className="font-sans text-[20px] font-bold tracking-widest text-[#FBAB3C] uppercase">
