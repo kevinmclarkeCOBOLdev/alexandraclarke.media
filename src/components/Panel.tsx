@@ -8,7 +8,6 @@ interface PanelProps {
   id: string;
   title: string;
   isActive: boolean;
-  activePanelId: string;
   onClick: () => void;
   children: React.ReactNode;
 }
@@ -17,7 +16,6 @@ export default function Panel({
   id,
   title,
   isActive,
-  activePanelId,
   onClick,
   children,
 }: PanelProps) {
@@ -33,14 +31,12 @@ export default function Panel({
 
     // Detect screen width
     const isDesktop = window.innerWidth >= 1024;
-    const isHomeActive = activePanelId === "home";
-    const isHomeInactive = id === "home" && !isActive;
 
     if (isDesktop) {
       if (isActive) {
         // Animate panel width to active state
         gsap.to(panel, {
-          width: isHomeActive ? "76%" : "82%",
+          width: "76%",
           duration: 1.0,
           ease: "power4.out",
         });
@@ -61,7 +57,7 @@ export default function Panel({
       } else {
         // Animate panel width to inactive state
         gsap.to(panel, {
-          width: isHomeInactive ? "0%" : "6%",
+          width: "6%",
           duration: 1.0,
           ease: "power4.out",
         });
@@ -74,7 +70,7 @@ export default function Panel({
         });
         // Fade in collapsed title
         gsap.to(titleEl, {
-          opacity: isHomeInactive ? 0 : 1,
+          opacity: 1,
           duration: 0.6,
           delay: 0.1,
           ease: "power2.out",
@@ -84,7 +80,7 @@ export default function Panel({
       // Mobile/Tablet Vertical Accordion
       if (isActive) {
         gsap.to(panel, {
-          height: isHomeActive ? "calc(100vh - 240px)" : "calc(100vh - 180px)",
+          height: "calc(100vh - 240px)",
           minHeight: "450px",
           duration: 0.8,
           ease: "power4.out",
@@ -102,8 +98,8 @@ export default function Panel({
         });
       } else {
         gsap.to(panel, {
-          height: isHomeInactive ? "0px" : "60px",
-          minHeight: isHomeInactive ? "0px" : "60px",
+          height: "60px",
+          minHeight: "60px",
           duration: 0.8,
           ease: "power4.out",
         });
@@ -114,30 +110,12 @@ export default function Panel({
           ease: "power2.out",
         });
         gsap.to(titleEl, {
-          opacity: isHomeInactive ? 0 : 1,
+          opacity: 1,
           duration: 0.5,
         });
       }
     }
-  }, [isActive, activePanelId, id]);
-
-  const isHomeInactive = id === "home" && !isActive;
-  const isHomeActive = activePanelId === "home";
-
-  let initialClass = "";
-  if (isActive) {
-    if (isHomeActive) {
-      initialClass = "w-full h-[calc(100vh-240px)] min-h-[450px] lg:w-[76%] lg:h-full";
-    } else {
-      initialClass = "w-full h-[calc(100vh-180px)] min-h-[450px] lg:w-[82%] lg:h-full";
-    }
-  } else {
-    if (isHomeInactive) {
-      initialClass = "w-0 h-0 lg:w-0 lg:h-full border-none pointer-events-none";
-    } else {
-      initialClass = "w-full h-[60px] min-h-[60px] lg:w-[6%] lg:h-full";
-    }
-  }
+  }, [isActive]);
 
   return (
     <div
@@ -145,7 +123,11 @@ export default function Panel({
       ref={panelRef}
       className={`relative overflow-hidden border-b lg:border-b-0 lg:border-r border-white/10 bg-background transition-colors duration-300 ${
         isActive ? "z-10" : "z-0"
-      } ${initialClass}`}
+      } ${
+        isActive
+          ? "w-full h-[calc(100vh-240px)] min-h-[450px] lg:w-[76%] lg:h-full"
+          : "w-full h-[60px] min-h-[60px] lg:w-[6%] lg:h-full"
+      }`}
     >
       {/* Background Image Preview (fades out when active) */}
       <div
@@ -166,7 +148,7 @@ export default function Panel({
       </div>
 
       {/* Click Trigger Area for Inactive State */}
-      {!isActive && !isHomeInactive && (
+      {!isActive && (
         <button
           onClick={onClick}
           data-cursor="pointer"
@@ -179,7 +161,7 @@ export default function Panel({
       <div
         ref={titleRef}
         className={`absolute inset-0 flex flex-row lg:flex-col items-center justify-center p-4 lg:py-8 lg:px-0 pointer-events-none select-none z-10 transition-opacity ${
-          isHomeInactive ? "hidden opacity-0" : ""
+          isActive ? "opacity-0 pointer-events-none" : ""
         }`}
       >
         <h2 className="font-editorial text-4xl lg:text-5xl font-bold tracking-widest uppercase stroked-title lg:rotate-90 transform whitespace-nowrap">
