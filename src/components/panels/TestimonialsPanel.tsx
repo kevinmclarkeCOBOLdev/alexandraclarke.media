@@ -47,6 +47,11 @@ export default function TestimonialsPanel() {
         <div className="absolute inset-0 bg-black/75" />
       </div>
 
+      {/* Giant Background Quote Mark (66% of screen height, sitting above z-0 black overlay) */}
+      <div className="absolute -right-16 top-1/2 -translate-y-1/2 pointer-events-none opacity-[0.12] select-none z-5">
+        <Quote className="h-[66vh] w-auto transform rotate-180" style={{ color: "#FBAB3C" }} />
+      </div>
+
       {/* Scrollable Content Container (added padding bottom pb-28 md:pb-36 lg:pb-40 for clearance) */}
       <div className="relative z-10 flex h-full w-full flex-col justify-between overflow-y-auto no-scrollbar p-6 pb-28 md:p-12 md:pb-36 lg:p-16 lg:pb-40">
         {/* Top Header */}
@@ -63,7 +68,6 @@ export default function TestimonialsPanel() {
             <p className="font-sans text-[16px] leading-relaxed text-foreground tracking-wide whitespace-pre-line">
               &ldquo;{testimonials[activeIndex].quote}&rdquo;
             </p>
-            <br />
             <div className="mt-6">
               <div className="w-12 h-[1px] bg-white/20 mb-4" />
               <h4 className="font-sans text-xs md:text-sm font-bold text-foreground">
