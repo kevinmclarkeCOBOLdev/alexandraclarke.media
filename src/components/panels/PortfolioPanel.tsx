@@ -32,10 +32,11 @@ const PORTFOLIO_ITEMS: PortfolioItem[] = [
   },
   {
     id: 3,
-    title: "CYBERNETIC PULSE",
+    title: "CABBAGE - THE TRAILER",
     category: "3d animations",
-    image: "/portfolio-cybernetic.png",
-    year: "2024",
+    image: "/cabbage-thumb.webp",
+    year: "0:47",
+    videoUrl: "WPLEGkbvzPg",
   },
   {
     id: 4,
