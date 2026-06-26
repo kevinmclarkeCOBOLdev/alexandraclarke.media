@@ -16,7 +16,7 @@ export default function PortfolioPanel() {
       {/* Top Bar / Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-white/10 pb-6">
         <div>
-          <h3 className="font-editorial text-2xl md:text-3xl font-bold mt-1 text-foreground">
+          <h3 className="font-editorial text-5xl md:text-6xl font-bold mt-1 stroked-title">
             PORTFOLIO
           </h3>
         </div>

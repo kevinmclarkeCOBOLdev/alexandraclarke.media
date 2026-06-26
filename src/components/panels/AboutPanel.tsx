@@ -101,7 +101,7 @@ export default function AboutPanel() {
       <div className="relative z-10 flex-1 flex flex-col gap-10 pl-[75px]">
         {/* Biography */}
         <div>
-          <h3 className="font-sans text-[20px] font-bold tracking-widest text-[#FBAB3C] uppercase">
+          <h3 className="font-editorial text-5xl md:text-6xl font-bold mt-1 stroked-title uppercase">
             Biography
           </h3>
           <p className="font-sans text-[14px] text-white mt-4 leading-relaxed tracking-wide">
