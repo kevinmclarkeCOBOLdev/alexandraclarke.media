@@ -10,22 +10,25 @@ interface PortfolioItem {
   category: "short films" | "3d animations" | "social media marketing";
   image: string;
   year: string;
+  videoUrl?: string;
 }
 
 const PORTFOLIO_ITEMS: PortfolioItem[] = [
   {
     id: 1,
-    title: "ECHOES OF SILENCE",
+    title: "JUST ANOTHER ASEXUAL FILM",
     category: "short films",
-    image: "/portfolio-echoes.png",
-    year: "2024",
+    image: "/just-another-asexual-film-thumb.webp",
+    year: "17:58",
+    videoUrl: "oJklZVMczpg",
   },
   {
     id: 2,
-    title: "RETROSPECTIVE",
+    title: "THE CASUAL LIVES OF YOUR EVERYDAY TRANSGENDERS - A SHORT TRANS DOCUMENTARY",
     category: "short films",
-    image: "/portfolio-retrospective.png",
-    year: "2025",
+    image: "/casual-lives-trans-documentary-thumb.webp",
+    year: "11:42",
+    videoUrl: "V_BiZEc6YSo",
   },
   {
     id: 3,
@@ -58,18 +61,21 @@ const PORTFOLIO_ITEMS: PortfolioItem[] = [
 ];
 
 export default function PortfolioPanel() {
-  const [selectedCategory, setSelectedCategory] = useState<string>("short films");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [modalVideoId, setModalVideoId] = useState<string>("");
 
   const categories = [
+    "all",
     "short films",
     "3d animations",
     "social media marketing",
   ];
 
-  const filteredItems = PORTFOLIO_ITEMS.filter(
-    (item) => item.category === selectedCategory
-  );
+  const filteredItems = selectedCategory === "all"
+    ? PORTFOLIO_ITEMS
+    : PORTFOLIO_ITEMS.filter((item) => item.category === selectedCategory);
 
   const handleCategoryChange = (cat: string) => {
     setSelectedCategory(cat);
@@ -97,6 +103,15 @@ export default function PortfolioPanel() {
       if (index === (active + 1) % length) return "flow-slide-next";
     }
     return "flow-slide-hidden";
+  };
+
+  const handleSlideClick = (item: PortfolioItem, index: number, isActive: boolean) => {
+    if (!isActive) {
+      setActiveIndex(index);
+    } else if (item.videoUrl) {
+      setModalVideoId(item.videoUrl);
+      setIsModalOpen(true);
+    }
   };
 
   return (
@@ -129,11 +144,11 @@ export default function PortfolioPanel() {
       </div>
 
       {/* Flow Gallery Area */}
-      <div className="flex-1 flex flex-col justify-center items-center py-8 min-h-[450px]">
+      <div className="flex-1 flex flex-col justify-center items-center py-8 min-h-[500px]">
         {filteredItems.length > 0 ? (
-          <div className="relative w-full max-w-[700px] flex flex-col items-center">
-            {/* Slider 3D Perspective Box */}
-            <div className="relative w-full h-[250px] md:h-[350px] flex items-center justify-center overflow-visible flow-perspective">
+          <div className="relative w-full max-w-[850px] flex flex-col items-center">
+            {/* Slider 3D Box */}
+            <div className="relative w-full h-[300px] md:h-[420px] flex items-center justify-center overflow-visible flow-perspective">
               {/* Left Navigation Arrow */}
               {filteredItems.length > 1 && (
                 <button
@@ -154,13 +169,9 @@ export default function PortfolioPanel() {
                 return (
                   <div
                     key={item.id}
-                    onClick={() => {
-                      if (!isActive) {
-                        setActiveIndex(index);
-                      }
-                    }}
-                    className={`absolute w-[75%] md:w-[70%] max-w-[500px] aspect-[16/10] flow-slide rounded-xl overflow-hidden border border-white/10 shadow-2xl bg-neutral-dark ${positionClass} ${
-                      isActive ? "cursor-default" : "cursor-pointer"
+                    onClick={() => handleSlideClick(item, index, isActive)}
+                    className={`absolute w-[80%] md:w-[75%] max-w-[650px] aspect-[16/10] flow-slide rounded-xl overflow-hidden border border-white/10 shadow-2xl bg-neutral-dark ${positionClass} ${
+                      isActive && !item.videoUrl ? "cursor-default" : "cursor-pointer"
                     }`}
                   >
                     {/* Slide Image */}
@@ -170,13 +181,24 @@ export default function PortfolioPanel() {
                         alt={item.title}
                         fill
                         className="object-cover"
-                        sizes="(max-width: 768px) 80vw, 500px"
+                        sizes="(max-width: 768px) 85vw, 650px"
                         priority={isActive}
                       />
                     </div>
                     
                     {/* Shadow overlay gradient at bottom */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
+
+                    {/* Play Button Overlay for Active Slide with Video */}
+                    {isActive && item.videoUrl && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/35 group-hover:bg-black/45 transition-colors duration-300">
+                        <div className="flex h-14 w-14 md:h-16 md:w-16 items-center justify-center rounded-full bg-[#FBAB3C] text-black shadow-lg hover:scale-110 active:scale-95 transition-transform duration-300">
+                          <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 md:w-6 md:h-6 ml-1">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 );
               })}
@@ -204,14 +226,14 @@ export default function PortfolioPanel() {
               </h4>
             </div>
 
-            {/* Thumbnail Preview Icons below */}
-            <div className="flex justify-center gap-3 mt-4">
+            {/* Thumbnail Preview Icons */}
+            <div className="flex justify-center flex-wrap gap-3 mt-4">
               {filteredItems.map((item, index) => (
                 <button
                   key={item.id}
                   data-cursor="pointer"
                   onClick={() => setActiveIndex(index)}
-                  className={`relative w-16 md:w-20 aspect-[16/10] rounded-lg overflow-hidden border transition-all duration-300 ${
+                  className={`relative w-28 md:w-36 aspect-[16/10] rounded-lg overflow-hidden border transition-all duration-300 ${
                     activeIndex === index
                       ? "border-accent scale-110 shadow-lg shadow-accent/10 opacity-100"
                       : "border-white/10 opacity-40 hover:opacity-70 hover:scale-105"
@@ -223,7 +245,7 @@ export default function PortfolioPanel() {
                     alt={item.title}
                     fill
                     className="object-cover"
-                    sizes="80px"
+                    sizes="160px"
                   />
                 </button>
               ))}
@@ -235,6 +257,38 @@ export default function PortfolioPanel() {
           </div>
         )}
       </div>
+
+      {/* Immersive Video Modal Popup (90% of screen dimensions) */}
+      {isModalOpen && modalVideoId && (
+        <div className="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="w-[90vw] h-[90vh] bg-black border border-white/10 rounded-xl relative overflow-hidden flex items-center justify-center shadow-2xl">
+            {/* Close Button 'X' at top right */}
+            <button
+              onClick={() => {
+                setIsModalOpen(false);
+                setModalVideoId("");
+              }}
+              className="absolute top-4 right-4 z-10 flex items-center justify-center bg-black/60 hover:bg-black/90 text-white rounded-full p-2 border border-white/10 transition-all duration-300 hover:scale-110 cursor-pointer"
+              title="Close Modal"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+
+            {/* Video Iframe */}
+            <iframe
+              className="w-full h-full"
+              src={`https://www.youtube.com/embed/${modalVideoId}?autoplay=1&controls=1&rel=0&playsinline=1`}
+              frameBorder="0"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              title="Portfolio Video Player"
+            ></iframe>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
