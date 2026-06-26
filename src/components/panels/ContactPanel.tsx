@@ -38,15 +38,15 @@ export default function ContactPanel() {
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      // Format time in London/Europe timezone
+      // Format time in Prague timezone
       const timeString = now.toLocaleTimeString("en-GB", {
-        timeZone: "Europe/London",
+        timeZone: "Europe/Prague",
         hour: "2-digit",
         minute: "2-digit",
         second: "2-digit",
         hour12: false,
       });
-      setLocalTime(timeString + " BST");
+      setLocalTime(timeString + " CEST");
     };
 
     updateTime();
@@ -67,16 +67,15 @@ export default function ContactPanel() {
       {/* Scrollable Content Container (added padding bottom pb-28 md:pb-36 lg:pb-40 for clearance) */}
       <div className="relative z-10 flex h-full w-full flex-col lg:flex-row overflow-y-auto no-scrollbar p-6 pb-28 md:p-12 md:pb-36 lg:p-16 lg:pb-40 gap-8 lg:gap-12">
         {/* Left Column: Details & Availability */}
-        <div className="w-full lg:w-5/12 flex flex-col justify-between gap-8">
+        <div className="w-full lg:w-5/12 flex flex-col gap-8">
           <div>
-            <span className="font-sans text-[10px] font-bold tracking-widest text-accent uppercase">
-              Inquiries
-            </span>
-            <h3 className="font-editorial text-2xl md:text-3xl font-bold mt-1 text-foreground">
-              START A CONVERSATION
-            </h3>
+            <div className="border-b border-white/10 pb-6 mb-6">
+              <h3 className="font-editorial text-5xl md:text-6xl font-bold mt-1 stroked-title">
+                CONTACT LEXI
+              </h3>
+            </div>
             <p className="font-sans text-xs md:text-sm text-neutral-grey mt-4 leading-relaxed tracking-wide">
-              Whether looking to execute a commercial campaign, document an intimate fashion narrative, or collaborate on a creative installation, feel free to reach out.
+              Have a project in mind? Let’s create something extraordinary.
             </p>
           </div>
 
@@ -106,10 +105,10 @@ export default function ContactPanel() {
               </div>
               <div>
                 <p className="font-sans text-[9px] text-neutral-grey uppercase tracking-widest font-semibold">
-                  Locations
+                  Location
                 </p>
                 <p className="font-sans text-xs font-bold text-foreground">
-                  London &bull; New York
+                  Prague
                 </p>
               </div>
             </div>
@@ -117,18 +116,10 @@ export default function ContactPanel() {
             {/* Time Zone details */}
             <div className="p-4 bg-neutral-dark rounded border border-white/5">
               <p className="font-sans text-[9px] text-neutral-grey uppercase tracking-widest">
-                Local Studio Time (London)
+                Local Studio Time (Prague)
               </p>
-              <p className="font-sans text-lg font-bold text-accent mt-1">{localTime || "12:00:00 BST"}</p>
+              <p className="font-sans text-lg font-bold text-accent mt-1">{localTime || "12:00:00 CEST"}</p>
             </div>
-          </div>
-
-          {/* Availability Badge */}
-          <div className="flex items-center gap-2 border border-accent/20 bg-accent/5 p-3 rounded">
-            <span className="h-2 w-2 rounded-full bg-accent animate-ping" />
-            <span className="font-sans text-[9px] font-bold text-accent tracking-widest uppercase">
-              Available for commissions — Q3/Q4 2026
-            </span>
           </div>
         </div>
 
