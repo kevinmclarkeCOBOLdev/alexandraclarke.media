@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface Testimonial {
@@ -33,6 +34,19 @@ export default function TestimonialsPanel() {
 
   return (
     <div className="relative w-full h-full overflow-hidden">
+      {/* Background Image Container */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <Image
+          src="/textured-overlay.jpg"
+          alt=""
+          fill
+          className="object-cover"
+          priority
+        />
+        {/* Black overlay with opacity of 75% */}
+        <div className="absolute inset-0 bg-black/75" />
+      </div>
+
       {/* Scrollable Content Container (added padding bottom pb-28 md:pb-36 lg:pb-40 for clearance) */}
       <div className="relative z-10 flex h-full w-full flex-col justify-between overflow-y-auto no-scrollbar p-6 pb-28 md:p-12 md:pb-36 lg:p-16 lg:pb-40">
         {/* Top Header */}
@@ -44,16 +58,17 @@ export default function TestimonialsPanel() {
 
         {/* Center Slideshow */}
         <div className="my-8 relative flex-1 flex flex-col justify-center max-w-4xl">
-          <div className="relative z-10 transition-all duration-500 -top-[75px]">
+          <div className="relative z-10 transition-all duration-500 -top-[110px]">
             <Quote className="h-8 w-8 mb-4" style={{ color: "#FBAB3C" }} />
-            <p className="font-editorial text-lg md:text-2xl lg:text-3xl leading-relaxed text-foreground tracking-wide whitespace-pre-line">
+            <p className="font-sans text-[16px] leading-relaxed text-foreground tracking-wide whitespace-pre-line">
               &ldquo;{testimonials[activeIndex].quote}&rdquo;
             </p>
             <div className="mt-6">
+              <div className="w-12 h-[1px] bg-white/20 mb-4" />
               <h4 className="font-sans text-xs md:text-sm font-bold text-foreground">
                 {testimonials[activeIndex].author}
               </h4>
-              <p className="font-sans text-[10px] text-accent font-semibold uppercase tracking-widest mt-1">
+              <p className="font-sans text-[10px] font-semibold uppercase tracking-widest mt-1" style={{ color: "#FBAB3C" }}>
                 {testimonials[activeIndex].role} &bull; {testimonials[activeIndex].company}
               </p>
             </div>
