@@ -17,9 +17,9 @@ export default function TestimonialsPanel() {
     {
       quote:
         "Alexandra Clarke’s work as a videographer has earned my theater group a first-rate reputation in Prague’s theater scene for our promotional materials—so much so that other groups ask us for help with their own campaigns.\n\nWithout her work, our season—in which every single performance is sold out—would not have nearly the same success.\n\nOriginal, unique, standout: What Alexandra Clarke has created with her interviews, clips, and trailers for the various plays by “The Mad and Merry Men” has a distinct visual identity that sets us apart from the pool of English theater groups.",
-      author: "Artistic Director",
-      role: "The Mad and Merry Men",
-      company: "Prague",
+      author: "Gordon L. Schmitz",
+      role: "Artistic Director",
+      company: "The Mad and Merry Men, Prague",
     },
   ];
 
@@ -44,8 +44,8 @@ export default function TestimonialsPanel() {
 
         {/* Center Slideshow */}
         <div className="my-8 relative flex-1 flex flex-col justify-center max-w-4xl">
-          <div className="relative z-10 transition-all duration-500">
-            <Quote className="h-8 w-8 text-accent mb-4" />
+          <div className="relative z-10 transition-all duration-500 -top-[75px]">
+            <Quote className="h-8 w-8 mb-4" style={{ color: "#FBAB3C" }} />
             <p className="font-editorial text-lg md:text-2xl lg:text-3xl leading-relaxed text-foreground tracking-wide whitespace-pre-line">
               &ldquo;{testimonials[activeIndex].quote}&rdquo;
             </p>
