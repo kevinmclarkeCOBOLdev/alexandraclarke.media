@@ -4,13 +4,14 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useEffect, useState } from "react";
-import { Send, MapPin, Mail, CheckCircle } from "lucide-react";
+import { MapPin, Mail, CheckCircle } from "lucide-react";
 
 // Form validation schema
 const contactSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
+  businessName: z.string().optional(),
   email: z.string().email({ message: "Please enter a valid email address." }),
-  projectType: z.string().min(1, { message: "Please select a project type." }),
+  phone: z.string().optional(),
   message: z.string().min(10, { message: "Message must be at least 10 characters." }),
 });
 
@@ -29,8 +30,9 @@ export default function ContactPanel() {
     resolver: zodResolver(contactSchema),
     defaultValues: {
       name: "",
+      businessName: "",
       email: "",
-      projectType: "Commercial",
+      phone: "",
       message: "",
     },
   });
@@ -65,9 +67,8 @@ export default function ContactPanel() {
   return (
     <div className="relative w-full h-full overflow-hidden">
       {/* Scrollable Content Container (added padding bottom pb-28 md:pb-36 lg:pb-40 for clearance) */}
-      <div className="relative z-10 flex h-full w-full flex-col lg:flex-row overflow-y-auto no-scrollbar p-6 pb-28 md:p-12 md:pb-36 lg:p-16 lg:pb-40 gap-8 lg:gap-12">
-        {/* Left Column: Details & Availability */}
-        <div className="w-full lg:w-5/12 flex flex-col gap-8">
+      <div className="relative z-10 flex h-full w-full flex-col overflow-y-auto no-scrollbar p-6 pb-28 md:p-12 md:pb-36 lg:p-16 lg:pb-40">
+        <div className="w-full max-w-2xl flex flex-col gap-8">
           <div>
             <div className="border-b border-white/10 pb-6 mb-6">
               <h3 className="font-editorial text-5xl md:text-6xl font-bold mt-1 stroked-title">
@@ -79,10 +80,11 @@ export default function ContactPanel() {
             </p>
           </div>
 
-          {/* Info Grid */}
-          <div className="flex flex-col gap-6">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded bg-accent/10 text-accent">
+          {/* Info Grid (Vertical Stack) */}
+          <div className="flex flex-col gap-4 max-w-md">
+            {/* Direct Email */}
+            <div className="flex items-center gap-3 p-4 bg-neutral-dark rounded border border-white/5">
+              <div className="flex h-10 w-10 items-center justify-center rounded bg-[#FBAB3C]/10 text-[#FBAB3C]">
                 <Mail className="h-5 w-5" />
               </div>
               <div>
@@ -99,8 +101,9 @@ export default function ContactPanel() {
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded bg-accent/10 text-accent">
+            {/* Location */}
+            <div className="flex items-center gap-3 p-4 bg-neutral-dark rounded border border-white/5">
+              <div className="flex h-10 w-10 items-center justify-center rounded bg-[#FBAB3C]/10 text-[#FBAB3C]">
                 <MapPin className="h-5 w-5" />
               </div>
               <div>
@@ -113,21 +116,19 @@ export default function ContactPanel() {
               </div>
             </div>
 
-            {/* Time Zone details */}
-            <div className="p-4 bg-neutral-dark rounded border border-white/5">
+            {/* Time Zone details (Clock) */}
+            <div className="p-4 bg-neutral-dark rounded border border-white/5 flex flex-col justify-center">
               <p className="font-sans text-[9px] text-neutral-grey uppercase tracking-widest">
                 Local Studio Time (Prague)
               </p>
-              <p className="font-sans text-lg font-bold text-accent mt-1">{localTime || "12:00:00 CEST"}</p>
+              <p className="font-sans text-lg font-bold mt-1" style={{ color: "#FBAB3C" }}>{localTime || "12:00:00 CEST"}</p>
             </div>
           </div>
-        </div>
 
-        {/* Right Column: Contact Form */}
-        <div className="flex-1 p-6 md:p-8 bg-neutral-dark border border-white/5 rounded-lg flex flex-col justify-center">
+          {/* Contact Form Container (Placed directly under the clock) */}
           {isSubmitted ? (
-            <div className="flex flex-col items-center justify-center text-center py-8">
-              <CheckCircle className="h-16 w-16 text-accent animate-bounce" />
+            <div className="flex flex-col items-center justify-center text-center py-12 bg-neutral-dark border border-white/5 rounded-lg">
+              <CheckCircle className="h-16 w-16 text-[#FBAB3C] animate-bounce" />
               <h4 className="font-editorial text-2xl font-bold text-foreground mt-4">
                 MESSAGE SENT
               </h4>
@@ -137,80 +138,82 @@ export default function ContactPanel() {
               <button
                 data-cursor="pointer"
                 onClick={() => setIsSubmitted(false)}
-                className="mt-6 px-4 py-2 border border-white/10 text-foreground hover:border-accent font-sans text-[10px] font-bold tracking-widest uppercase transition-colors"
+                className="mt-6 px-4 py-2 border border-white/10 text-foreground hover:border-[#FBAB3C] font-sans text-[10px] font-bold tracking-widest uppercase transition-colors"
               >
                 Send Another Message
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-              {/* Name */}
-              <div>
-                <label className="block font-sans text-[9px] font-bold text-neutral-grey uppercase tracking-widest mb-1.5">
-                  Your Name
-                </label>
-                <input
-                  type="text"
-                  {...register("name")}
-                  className="w-full bg-background border border-white/10 rounded px-3 py-2 text-xs text-foreground focus:outline-none focus:border-accent transition-colors"
-                  placeholder="e.g. Eleanor Sterling"
-                />
-                {errors.name && (
-                  <p className="font-sans text-[9px] text-red-400 font-bold mt-1 uppercase tracking-wider">
-                    {errors.name.message}
-                  </p>
-                )}
-              </div>
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4">
+                {/* Your Name */}
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Your Name"
+                    {...register("name")}
+                    className="w-full bg-[#1A1A1A] border border-white/10 rounded px-4 py-3 text-sm text-foreground placeholder-neutral-500 focus:outline-none focus:border-[#FBAB3C] transition-colors"
+                  />
+                  {errors.name && (
+                    <p className="font-sans text-[9px] text-red-400 font-bold mt-1 uppercase tracking-wider">
+                      {errors.name.message}
+                    </p>
+                  )}
+                </div>
 
-              {/* Email */}
-              <div>
-                <label className="block font-sans text-[9px] font-bold text-neutral-grey uppercase tracking-widest mb-1.5">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  {...register("email")}
-                  className="w-full bg-background border border-white/10 rounded px-3 py-2 text-xs text-foreground focus:outline-none focus:border-accent transition-colors"
-                  placeholder="e.g. eleanor@vogue.com"
-                />
-                {errors.email && (
-                  <p className="font-sans text-[9px] text-red-400 font-bold mt-1 uppercase tracking-wider">
-                    {errors.email.message}
-                  </p>
-                )}
-              </div>
+                {/* Business Name */}
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Business Name"
+                    {...register("businessName")}
+                    className="w-full bg-[#1A1A1A] border border-white/10 rounded px-4 py-3 text-sm text-foreground placeholder-neutral-500 focus:outline-none focus:border-[#FBAB3C] transition-colors"
+                  />
+                  {errors.businessName && (
+                    <p className="font-sans text-[9px] text-red-400 font-bold mt-1 uppercase tracking-wider">
+                      {errors.businessName.message}
+                    </p>
+                  )}
+                </div>
 
-              {/* Project Type */}
-              <div>
-                <label className="block font-sans text-[9px] font-bold text-neutral-grey uppercase tracking-widest mb-1.5">
-                  Project Type
-                </label>
-                <select
-                  {...register("projectType")}
-                  className="w-full bg-background border border-white/10 rounded px-3 py-2 text-xs text-foreground focus:outline-none focus:border-accent transition-colors"
-                >
-                  <option value="Commercial">Commercial / Branding</option>
-                  <option value="Fashion">Fashion / Editorial</option>
-                  <option value="Documentary">Documentary / Cinematic Film</option>
-                  <option value="Other">Other Creative Inquiry</option>
-                </select>
-                {errors.projectType && (
-                  <p className="font-sans text-[9px] text-red-400 font-bold mt-1 uppercase tracking-wider">
-                    {errors.projectType.message}
-                  </p>
-                )}
+                {/* Email Address */}
+                <div>
+                  <input
+                    type="email"
+                    placeholder="Email Address"
+                    {...register("email")}
+                    className="w-full bg-[#1A1A1A] border border-white/10 rounded px-4 py-3 text-sm text-foreground placeholder-neutral-500 focus:outline-none focus:border-[#FBAB3C] transition-colors"
+                  />
+                  {errors.email && (
+                    <p className="font-sans text-[9px] text-red-400 font-bold mt-1 uppercase tracking-wider">
+                      {errors.email.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* Phone Number */}
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Phone Number"
+                    {...register("phone")}
+                    className="w-full bg-[#1A1A1A] border border-white/10 rounded px-4 py-3 text-sm text-foreground placeholder-neutral-500 focus:outline-none focus:border-[#FBAB3C] transition-colors"
+                  />
+                  {errors.phone && (
+                    <p className="font-sans text-[9px] text-red-400 font-bold mt-1 uppercase tracking-wider">
+                      {errors.phone.message}
+                    </p>
+                  )}
+                </div>
               </div>
 
               {/* Message */}
               <div>
-                <label className="block font-sans text-[9px] font-bold text-neutral-grey uppercase tracking-widest mb-1.5">
-                  Brief / Narrative Details
-                </label>
                 <textarea
+                  placeholder="Tell us about your project, timeline, and locations..."
                   {...register("message")}
-                  rows={4}
-                  className="w-full bg-background border border-white/10 rounded px-3 py-2 text-xs text-foreground focus:outline-none focus:border-accent transition-colors resize-none"
-                  placeholder="Describe your creative vision, timeline, and goals..."
+                  rows={5}
+                  className="w-full bg-[#1A1A1A] border border-white/10 rounded px-4 py-3 text-sm text-foreground placeholder-neutral-500 focus:outline-none focus:border-[#FBAB3C] transition-colors resize-none"
                 />
                 {errors.message && (
                   <p className="font-sans text-[9px] text-red-400 font-bold mt-1 uppercase tracking-wider">
@@ -220,21 +223,15 @@ export default function ContactPanel() {
               </div>
 
               {/* Submit Button */}
-              <button
-                type="submit"
-                data-cursor="pointer"
-                disabled={isSubmitting}
-                className="w-full py-3 bg-accent hover:bg-accent-muted text-background font-sans text-xs font-bold tracking-widest uppercase transition-colors duration-300 flex items-center justify-center gap-2"
-              >
-                {isSubmitting ? (
-                  <span>SENDING...</span>
-                ) : (
-                  <>
-                    <span>SEND INQUIRY</span>
-                    <Send className="h-3 w-3" />
-                  </>
-                )}
-              </button>
+              <div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-3.5 bg-[#FBAB3C] hover:bg-[#FBAB3C]/95 text-white font-sans text-sm font-semibold tracking-wide rounded transition-colors duration-300 flex items-center justify-center gap-2"
+                >
+                  {isSubmitting ? "Sending..." : "Send Enquiry"}
+                </button>
+              </div>
             </form>
           )}
         </div>
