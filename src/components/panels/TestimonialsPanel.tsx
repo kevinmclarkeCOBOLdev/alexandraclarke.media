@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface Testimonial {
   quote: string;
@@ -59,18 +59,14 @@ export default function TestimonialsPanel() {
       {/* Scrollable Content Container (added padding bottom pb-28 md:pb-36 lg:pb-40 for clearance) */}
       <div className="relative z-10 flex h-full w-full flex-col justify-between overflow-y-auto no-scrollbar p-6 pb-28 md:p-12 md:pb-36 lg:p-16 lg:pb-40">
         {/* Top Header */}
-        <div>
-          <span className="font-sans text-[10px] font-bold tracking-widest text-accent uppercase">
-            Endorsements
-          </span>
-          <h3 className="font-editorial text-2xl md:text-3xl font-bold mt-1 text-foreground">
-            WHAT CLIENTS SAY
+        <div className="border-b border-white/10 pb-6">
+          <h3 className="font-editorial text-5xl md:text-6xl font-bold mt-1 stroked-title">
+            TESTIMONIALS
           </h3>
         </div>
 
         {/* Center Slideshow */}
         <div className="my-8 relative flex-1 flex flex-col justify-center max-w-4xl">
-          <Quote className="h-12 w-12 text-accent/25 absolute -top-6 -left-4" />
           <div className="relative z-10 transition-all duration-500">
             <p className="font-editorial text-lg md:text-2xl lg:text-3xl leading-relaxed text-foreground tracking-wide">
               &ldquo;{testimonials[activeIndex].quote}&rdquo;
