@@ -64,14 +64,27 @@ export default function HomePanel() {
         // @ts-expect-error window.YT is not typed
         player = new window.YT.Player("bg-video-iframe", {
           events: {
-            onReady: (event: { target: { setPlaybackRate: (rate: number) => void } }) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            onReady: (event: any) => {
               try {
                 event.target.setPlaybackRate(1.5);
               } catch (e) {
                 console.error("Failed to set playback rate:", e);
               }
+              try {
+                event.target.unloadModule("captions");
+                event.target.unloadModule("cc");
+              } catch {
+                // Ignore if not supported in this context
+              }
+              try {
+                event.target.setOption("captions", "track", {});
+              } catch {
+                // Ignore if not supported
+              }
             },
-            onStateChange: (event: { data: number }) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            onStateChange: (event: any) => {
               // @ts-expect-error window.YT is not typed
               if (event.data === window.YT.PlayerState.ENDED) {
                 setIsVideoEnded(true);
@@ -79,6 +92,17 @@ export default function HomePanel() {
               // @ts-expect-error window.YT is not typed
               if (event.data === window.YT.PlayerState.PLAYING) {
                 setIsVideoPlaying(true);
+                try {
+                  event.target.unloadModule("captions");
+                  event.target.unloadModule("cc");
+                } catch {
+                  // Ignore
+                }
+                try {
+                  event.target.setOption("captions", "track", {});
+                } catch {
+                  // Ignore
+                }
               }
             },
           },
