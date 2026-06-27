@@ -30,21 +30,13 @@ export default function HomePanel() {
 
   useEffect(() => {
     if (isPageLoaded) {
+      setShouldPlayVideo(true);
       const timer = setTimeout(() => {
         setShouldStartTagAnimation(true);
       }, 2000);
       return () => clearTimeout(timer);
     }
   }, [isPageLoaded]);
-
-  useEffect(() => {
-    if (shouldStartTagAnimation) {
-      const timer = setTimeout(() => {
-        setShouldPlayVideo(true);
-      }, 2700);
-      return () => clearTimeout(timer);
-    }
-  }, [shouldStartTagAnimation]);
 
   useEffect(() => {
     if (isVideoPlaying) {
