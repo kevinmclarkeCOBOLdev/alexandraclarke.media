@@ -14,7 +14,6 @@ export default function HomePanel() {
   const [shouldStartTagAnimation, setShouldStartTagAnimation] = useState(false);
   const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-  const [shouldShrinkTags, setShouldShrinkTags] = useState(false);
   const [showFallback, setShowFallback] = useState(false);
 
   useEffect(() => {
@@ -42,11 +41,7 @@ export default function HomePanel() {
     }
   }, [isPageLoaded]);
 
-  useEffect(() => {
-    if (isVideoPlaying) {
-      setShouldShrinkTags(true);
-    }
-  }, [isVideoPlaying]);
+
 
   useEffect(() => {
     if (shouldPlayVideo && !isVideoPlaying) {
@@ -192,11 +187,7 @@ export default function HomePanel() {
             </span>
           </h2>
           <div
-            className={`flex flex-col font-sans font-medium text-[#FBAB3C] tracking-wide items-start leading-[1.1] transition-all duration-[2000ms] ease-in-out ${
-              shouldShrinkTags
-                ? "text-[27px] md:text-[30px] gap-1 mt-3"
-                : "text-[54px] md:text-[60px] gap-2 mt-6"
-            }`}
+            className="flex flex-col font-sans font-medium text-[#FBAB3C] tracking-wide items-start leading-[1.1] text-[27px] md:text-[30px] gap-1 mt-3"
           >
             <span className={`block opacity-0 ${shouldStartTagAnimation ? "animate-slide-in-left" : ""}`} style={{ animationDelay: "270ms" }}>
               filmmaker,
