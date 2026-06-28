@@ -19,8 +19,8 @@
   --color-accent-muted: var(--accent-muted);
   --color-neutral-grey: var(--neutral-grey);
   --color-neutral-dark: var(--neutral-dark);
-  --font-editorial: var(--font-editorial);
-  --font-sans: var(--font-sans);
+  --font-editorial: var(--font-agency);
+  --font-sans: var(--font-poppins);
 }
 
 * {
