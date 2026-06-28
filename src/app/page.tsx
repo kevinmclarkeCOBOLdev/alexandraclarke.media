@@ -83,15 +83,7 @@ export default function Page() {
       // Ensure we are not scrolling inside scrollable container elements
       const target = e.target as HTMLElement;
       const scrollable = target.closest(".overflow-y-auto");
-      if (scrollable) {
-        // If the inner container is scrollable and we haven't reached the bounds, don't trigger panel change
-        const scrollTop = scrollable.scrollTop;
-        const scrollHeight = scrollable.scrollHeight;
-        const clientHeight = scrollable.clientHeight;
-        
-        if (e.deltaY > 0 && scrollTop + clientHeight < scrollHeight - 10) return;
-        if (e.deltaY < 0 && scrollTop > 10) return;
-      }
+      if (scrollable) return;
 
       const currentIndex = PANELS.findIndex((p) => p.id === activePanel);
 
@@ -119,6 +111,11 @@ export default function Page() {
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
+    // Ensure we are not swiping inside scrollable container elements
+    const target = e.target as HTMLElement;
+    const scrollable = target.closest(".overflow-y-auto");
+    if (scrollable) return;
+
     const deltaX = touchStart.current.x - e.changedTouches[0].clientX;
     const deltaY = touchStart.current.y - e.changedTouches[0].clientY;
     const currentIndex = PANELS.findIndex((p) => p.id === activePanel);

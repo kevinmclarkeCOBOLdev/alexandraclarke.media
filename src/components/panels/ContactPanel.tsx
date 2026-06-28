@@ -347,7 +347,7 @@ export default function ContactPanel() {
                     type="text"
                     placeholder="Your Name"
                     {...register("name")}
-                    className="w-full bg-[#1A1A1A] border border-white/10 rounded px-4 py-6 md:py-[17px] text-sm text-foreground placeholder-neutral-500 focus:outline-none focus:border-[#FBAB3C] transition-colors"
+                    className="w-full bg-[#1A1A1A] border border-white/10 rounded px-4 py-[32px] md:py-[17px] text-sm text-foreground placeholder-neutral-500 focus:outline-none focus:border-[#FBAB3C] transition-colors"
                   />
                   {errors.name && (
                     <p className="font-sans text-[9px] text-red-400 font-bold mt-1 uppercase tracking-wider">
@@ -362,7 +362,7 @@ export default function ContactPanel() {
                     type="text"
                     placeholder="Business Name"
                     {...register("businessName")}
-                    className="w-full bg-[#1A1A1A] border border-white/10 rounded px-4 py-6 md:py-[17px] text-sm text-foreground placeholder-neutral-500 focus:outline-none focus:border-[#FBAB3C] transition-colors"
+                    className="w-full bg-[#1A1A1A] border border-white/10 rounded px-4 py-[32px] md:py-[17px] text-sm text-foreground placeholder-neutral-500 focus:outline-none focus:border-[#FBAB3C] transition-colors"
                   />
                   {errors.businessName && (
                     <p className="font-sans text-[9px] text-red-400 font-bold mt-1 uppercase tracking-wider">
@@ -377,7 +377,7 @@ export default function ContactPanel() {
                     type="email"
                     placeholder="Email Address"
                     {...register("email")}
-                    className="w-full bg-[#1A1A1A] border border-white/10 rounded px-4 py-6 md:py-[17px] text-sm text-foreground placeholder-neutral-500 focus:outline-none focus:border-[#FBAB3C] transition-colors"
+                    className="w-full bg-[#1A1A1A] border border-white/10 rounded px-4 py-[32px] md:py-[17px] text-sm text-foreground placeholder-neutral-500 focus:outline-none focus:border-[#FBAB3C] transition-colors"
                   />
                   {errors.email && (
                     <p className="font-sans text-[9px] text-red-400 font-bold mt-1 uppercase tracking-wider">
@@ -392,7 +392,7 @@ export default function ContactPanel() {
                     type="text"
                     placeholder="Phone Number"
                     {...register("phone")}
-                    className="w-full bg-[#1A1A1A] border border-white/10 rounded px-4 py-6 md:py-[17px] text-sm text-foreground placeholder-neutral-500 focus:outline-none focus:border-[#FBAB3C] transition-colors"
+                    className="w-full bg-[#1A1A1A] border border-white/10 rounded px-4 py-[32px] md:py-[17px] text-sm text-foreground placeholder-neutral-500 focus:outline-none focus:border-[#FBAB3C] transition-colors"
                   />
                   {errors.phone && (
                     <p className="font-sans text-[9px] text-red-400 font-bold mt-1 uppercase tracking-wider">
@@ -408,7 +408,7 @@ export default function ContactPanel() {
                   placeholder="Tell us about your project, timeline, and locations..."
                   {...register("message")}
                   rows={3}
-                  className="w-full h-[150px] md:h-[200px] bg-[#1A1A1A] border border-white/10 rounded px-4 py-3 text-sm text-foreground placeholder-neutral-500 focus:outline-none focus:border-[#FBAB3C] transition-colors resize-none"
+                  className="w-full h-[75px] md:h-[200px] bg-[#1A1A1A] border border-white/10 rounded px-4 py-3 text-sm text-foreground placeholder-neutral-500 focus:outline-none focus:border-[#FBAB3C] transition-colors resize-none"
                 />
                 {errors.message && (
                   <p className="font-sans text-[9px] text-red-400 font-bold mt-1 uppercase tracking-wider">
@@ -418,12 +418,12 @@ export default function ContactPanel() {
               </div>
 
               {/* Submit Button */}
-              <div>
+              <div className="flex justify-center w-full">
                 <button
                   type="submit"
                   disabled={isSubmitting}
                   data-cursor="pointer"
-                  className="w-full py-[47px] md:py-7 bg-[#FBAB3C] hover:bg-[#FBAB3C]/95 text-[#202020] font-sans text-sm font-semibold tracking-wide rounded cursor-pointer transition-colors duration-300 flex items-center justify-center gap-2"
+                  className="w-1/2 md:w-full h-[53px] md:h-auto md:py-3.5 bg-[#FBAB3C] hover:bg-[#FBAB3C]/95 text-[#202020] font-sans text-sm font-semibold tracking-wide rounded-[50px] md:rounded cursor-pointer transition-colors duration-300 flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? "Sending..." : "Send Enquiry"}
                 </button>
