@@ -217,7 +217,7 @@ export default function Panel({
           isActive ? "opacity-0 pointer-events-none" : ""
         }`}
       >
-        <h2 className="font-editorial text-4xl lg:text-5xl font-bold tracking-widest uppercase stroked-title lg:rotate-90 transform whitespace-nowrap">
+        <h2 className="font-editorial text-4xl lg:text-5xl font-bold tracking-widest uppercase stroked-tab-title lg:rotate-90 transform whitespace-nowrap">
           {title}
         </h2>
       </div>

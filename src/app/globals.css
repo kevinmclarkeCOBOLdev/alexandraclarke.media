@@ -78,6 +78,20 @@ html, body {
 .stroked-title {
   color: transparent;
   -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px #FBAB3C;
+  text-stroke: 1px #FBAB3C;
+}
+
+@media (min-width: 768px) {
+  .stroked-title {
+    -webkit-text-stroke: 2px #FBAB3C;
+    text-stroke: 2px #FBAB3C;
+  }
+}
+
+.stroked-tab-title {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
   -webkit-text-stroke: 2px #FBAB3C;
   text-stroke: 2px #FBAB3C;
 }

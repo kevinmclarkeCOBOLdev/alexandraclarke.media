@@ -55,7 +55,7 @@ export default function TestimonialsPanel() {
 
         {/* Top Header */}
         <div className="border-b-0 md:border-b border-white/10 pb-0 md:pb-6">
-          <h3 className="font-editorial text-[24px] md:text-6xl font-bold mt-1 stroked-title">
+          <h3 className="font-editorial text-[32px] md:text-6xl font-bold mt-1 stroked-title">
             TESTIMONIALS
           </h3>
         </div>

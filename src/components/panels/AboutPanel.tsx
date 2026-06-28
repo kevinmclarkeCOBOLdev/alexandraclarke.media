@@ -63,7 +63,7 @@ export default function AboutPanel() {
       <div className="relative z-10 w-full h-full flex flex-col lg:flex-row overflow-y-auto no-scrollbar p-6 pb-28 md:p-12 md:pb-36 lg:p-16 lg:pb-40 gap-8 lg:gap-12">
         {/* Mobile Biography Title */}
         <div className="block md:hidden order-1 pl-[75px]">
-          <h3 className="font-editorial text-[24px] font-bold mt-1 stroked-title uppercase">
+          <h3 className="font-editorial text-[32px] font-bold mt-1 stroked-title uppercase">
             Biography
           </h3>
         </div>
