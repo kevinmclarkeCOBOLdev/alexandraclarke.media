@@ -112,7 +112,7 @@ export default function PortfolioPanel() {
         {/* Top Bar / Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-white/10 pb-6">
           <div>
-            <h3 className="font-editorial text-5xl md:text-6xl font-bold mt-1 stroked-title">
+            <h3 className="font-editorial text-[24px] md:text-6xl font-bold mt-1 stroked-title">
               PORTFOLIO
             </h3>
           </div>
@@ -254,7 +254,7 @@ export default function PortfolioPanel() {
       </div>
 
       {/* Social Icons (bottom left - persistent and non-scrolling!) */}
-      <div className="absolute bottom-6 left-6 md:bottom-12 md:left-12 lg:bottom-16 lg:left-16 z-20 flex flex-col gap-3">
+      <div className="hidden md:flex absolute bottom-6 left-6 md:bottom-12 md:left-12 lg:bottom-16 lg:left-16 z-20 flex-col gap-3">
         {/* Instagram */}
         <a
           href="https://www.instagram.com/alexandra.lexi.clarke/"

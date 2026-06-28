@@ -61,9 +61,16 @@ export default function AboutPanel() {
 
       {/* Scrollable Content Container (added padding bottom pb-28 md:pb-36 lg:pb-40 for clearance) */}
       <div className="relative z-10 w-full h-full flex flex-col lg:flex-row overflow-y-auto no-scrollbar p-6 pb-28 md:p-12 md:pb-36 lg:p-16 lg:pb-40 gap-8 lg:gap-12">
+        {/* Mobile Biography Title */}
+        <div className="block md:hidden order-1 pl-[75px]">
+          <h3 className="font-editorial text-[24px] font-bold mt-1 stroked-title uppercase">
+            Biography
+          </h3>
+        </div>
+
         {/* Left Column: Portrait & CV Download */}
-        <div className="relative z-10 w-full lg:w-[calc(41.67%-150px)] lg:min-w-[250px] flex flex-col gap-6">
-          <div className="relative aspect-square w-full max-w-[400px] overflow-hidden rounded-tl-[50px] rounded-br-[50px] rounded-tr-none rounded-bl-none border border-[#FBAB3C]/20 bg-neutral-dark shadow-2xl">
+        <div className="relative z-10 w-full lg:w-[calc(41.67%-150px)] lg:min-w-[250px] flex flex-col gap-6 order-3 md:order-none">
+          <div className="hidden md:block relative aspect-square w-full max-w-[400px] overflow-hidden rounded-tl-[50px] rounded-br-[50px] rounded-tr-none rounded-bl-none border border-[#FBAB3C]/20 bg-neutral-dark shadow-2xl">
             <Image
               src="/alex-intro-image-ylo-bg.webp"
               alt="Alexandra Clarke"
@@ -100,10 +107,10 @@ export default function AboutPanel() {
         </div>
 
         {/* Right Column: Bio, Timeline & Info (Scrollable Content) */}
-        <div className="relative z-10 flex-1 flex flex-col gap-10 pl-[75px]">
+        <div className="relative z-10 flex-1 flex flex-col gap-10 pl-[75px] order-2 md:order-none">
           {/* Biography */}
           <div>
-            <h3 className="font-editorial text-5xl md:text-6xl font-bold mt-1 stroked-title uppercase">
+            <h3 className="hidden md:block font-editorial text-5xl md:text-6xl font-bold mt-1 stroked-title uppercase">
               Biography
             </h3>
             <p className="font-sans text-[14px] text-white mt-4 leading-relaxed tracking-wide">
@@ -204,7 +211,7 @@ export default function AboutPanel() {
       </div>
 
       {/* Social Icons (bottom left - persistent and non-scrolling!) */}
-      <div className="absolute bottom-6 left-6 md:bottom-12 md:left-12 lg:bottom-16 lg:left-16 z-20 flex flex-col gap-3">
+      <div className="hidden md:flex absolute bottom-6 left-6 md:bottom-12 md:left-12 lg:bottom-16 lg:left-16 z-20 flex-col gap-3">
         {/* Instagram */}
         <a
           href="https://www.instagram.com/alexandra.lexi.clarke/"
