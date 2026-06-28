@@ -71,8 +71,9 @@ html, body {
 }
 
 .text-stroke-gold {
-  -webkit-text-stroke: 1px var(--accent);
   color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px var(--accent);
 }
 
 .stroked-title {
