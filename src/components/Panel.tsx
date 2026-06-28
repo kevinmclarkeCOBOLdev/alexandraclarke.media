@@ -166,14 +166,12 @@ export default function Panel({
     <div
       id={id}
       ref={panelRef}
-      className={`relative overflow-hidden border-b-0 lg:border-b ${
-        isActive ? "" : "lg:border-r"
-      } lg:border-white/10 bg-background transition-colors duration-300 ${
+      className={`relative overflow-hidden bg-background transition-colors duration-300 ${
         isActive ? "z-10" : "z-0"
       } ${
         isActive
-          ? "w-full h-[calc(100vh-280px)] min-h-[450px] lg:w-[76%] lg:h-full"
-          : "w-full h-[60px] min-h-[60px] rounded-[50px] bg-[#FBAB3C] border-[3px] border-[#FBAB3C] lg:rounded-none lg:bg-background lg:w-[6%] lg:h-full lg:border-none"
+          ? "w-full h-[calc(100vh-280px)] min-h-[450px] border-none lg:border-none lg:w-[76%] lg:h-full"
+          : "w-full h-[60px] min-h-[60px] rounded-[50px] bg-[#FBAB3C] border-[3px] border-[#FBAB3C] lg:border-none lg:border-r lg:border-white/10 lg:rounded-none lg:bg-background lg:w-[6%] lg:h-full"
       } ${
         !isActive && !hasEntered
           ? "opacity-0 translate-y-full lg:translate-y-0 lg:translate-x-full"

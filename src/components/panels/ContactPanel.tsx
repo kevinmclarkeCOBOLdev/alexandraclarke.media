@@ -263,9 +263,9 @@ export default function ContactPanel() {
 
       {/* Scrollable Content Container (added padding bottom pb-28 md:pb-36 lg:pb-40 for clearance) */}
       <div className="relative z-10 flex h-full w-full flex-col overflow-y-auto no-scrollbar p-6 pb-28 md:p-12 md:pb-36 lg:p-16 lg:pb-40">
-        <div className="w-full max-w-2xl flex flex-col gap-8">
+        <div className="w-full max-w-2xl flex flex-col gap-4 md:gap-8">
           <div>
-            <div className="border-b border-white/10 pb-6 mb-6">
+            <div className="border-b border-white/10 pb-3 mb-3 md:pb-6 md:mb-6">
               <h3 className="font-editorial text-[24px] md:text-6xl font-bold mt-1 stroked-title">
                 CONTACT LEXI
               </h3>
@@ -276,7 +276,7 @@ export default function ContactPanel() {
           </div>
 
           {/* Info Grid (Vertical Stack) */}
-          <div className="flex flex-col gap-4 max-w-md">
+          <div className="flex flex-col gap-2 md:gap-4 max-w-md">
             {/* Direct Email */}
             <div className="flex items-center gap-3 p-4 bg-neutral-dark rounded border border-white/5">
               <div className="flex h-10 w-10 items-center justify-center rounded bg-[#FBAB3C]/10 text-[#FBAB3C]">
@@ -339,8 +339,8 @@ export default function ContactPanel() {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 md:gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-3 md:gap-y-6 gap-x-4">
                 {/* Your Name */}
                 <div>
                   <input
@@ -407,8 +407,8 @@ export default function ContactPanel() {
                 <textarea
                   placeholder="Tell us about your project, timeline, and locations..."
                   {...register("message")}
-                  rows={5}
-                  className="w-full bg-[#1A1A1A] border border-white/10 rounded px-4 py-3 text-sm text-foreground placeholder-neutral-500 focus:outline-none focus:border-[#FBAB3C] transition-colors resize-none"
+                  rows={3}
+                  className="w-full h-24 md:h-40 bg-[#1A1A1A] border border-white/10 rounded px-4 py-3 text-sm text-foreground placeholder-neutral-500 focus:outline-none focus:border-[#FBAB3C] transition-colors resize-none"
                 />
                 {errors.message && (
                   <p className="font-sans text-[9px] text-red-400 font-bold mt-1 uppercase tracking-wider">
@@ -422,7 +422,8 @@ export default function ContactPanel() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3.5 bg-[#FBAB3C] hover:bg-[#FBAB3C]/95 text-[#202020] font-sans text-sm font-semibold tracking-wide rounded transition-colors duration-300 flex items-center justify-center gap-2"
+                  data-cursor="pointer"
+                  className="w-full py-3.5 bg-[#FBAB3C] hover:bg-[#FBAB3C]/95 text-[#202020] font-sans text-sm font-semibold tracking-wide rounded cursor-pointer transition-colors duration-300 flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? "Sending..." : "Send Enquiry"}
                 </button>
