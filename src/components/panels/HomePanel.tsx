@@ -227,7 +227,7 @@ export default function HomePanel() {
       {/* Top Header */}
       <div className="relative z-10 flex justify-between items-start mt-[50px]">
         <div>
-          <h2 className="font-editorial text-[64.8px] md:text-9xl lg:text-[10rem] font-bold tracking-tight stroked-title">
+          <h2 className="font-editorial text-[64.8px] md:text-9xl lg:text-[7.5rem] font-bold tracking-tight stroked-title">
             ALEXANDRA CLARKE{" "}
             <span
               className="inline-block font-editorial text-[#FBAB3C]"
